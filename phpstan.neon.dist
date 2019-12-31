@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    inferPrivatePropertyTypeFromConstructor: true
+    autoload_directories:
+        - ./lib
+    autoload_files:
+        - ./vendor/autoload.php
+    ignoreErrors:
+        # Sometimes not using return types for PHP 7.0 compatibility
+        - '#has no return typehint specified.#'
+        # WordPress functions
+        - '#Function do_action not found.#'

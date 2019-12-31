@@ -1,0 +1,10 @@
+
+.docker/
+srv/
+var/
+vendor/
+
+.env
+.idea
+composer.lock
+coverage.xml

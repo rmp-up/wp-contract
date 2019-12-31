@@ -1,0 +1,25 @@
+{
+  "name": "rmp-up/wp-contracts",
+  "description": "",
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "RmpUp\\Wp\\": "lib"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "RmpUp\\Wp\\Test\\": "opt/doc"
+    }
+  },
+  "require": {
+    "php": ">=7.0 <=7.4",
+    "psr/log": "1.*"
+  },
+  "require-dev": {
+    "phpstan/phpstan": ">=0.9 <=0.12",
+    "phpunit/phpunit": "~6|~7",
+    "pretzlaw/wp-integration-test": "0.2.*",
+    "wp-cli/wp-cli-bundle": "~2"
+  }
+}
