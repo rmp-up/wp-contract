@@ -6,10 +6,11 @@
 
 * Rewindable Generators
 * Hydrate and exchange protected fields in objects
-* System logger compatible logging
-  * Using [`syslog()`](https://php.net/syslog)
+* System logger compatible logging using [`syslog priorities`](https://php.net/syslog)
+  * Forwards to `syslog()`
   * Delegate to [PSR-3 logger](https://www.php-fig.org/psr/psr-3/)
-  * Forward as user-errors to [`trigger_error()`](https://php.net/trigger_error)
+  * Forward to [`error_log()`](https://php.net/function.error-log)
+    respecting configured [error reporting levels](https://php.net/error_reporting)
   * Forward to [WP_CLI](https://make.wordpress.org/cli/)
 * Message Bus (delegating to WP_Hook)
   * Decouple exception handling per action/filter

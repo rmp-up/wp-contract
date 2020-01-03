@@ -30,34 +30,49 @@ use RmpUp\Wp\Logging\TriggerError;
  *
  * @copyright  2019 Pretzlaw (https://rmp-up.de)
  */
-class TriggerErrorTest extends TestCase
+class TriggerErrorTest extends LoggingTestCase
 {
+    private $providedMessage;
+    private $providedLevel;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->logger = new TriggerError();
+
+        set_error_handler(
+            function ($level, $message) {
+                $this->providedMessage = $message;
+                $this->providedLevel = $level;
+            }
+        );
+    }
+
     /**
      * @dataProvider prioToErrorLevel
      */
     public function testTriggerUserLevelErrors($priority, $expectedErrorLevel)
     {
-        $logger = new TriggerError();
-
-        $providedLevel = null;
-        $providedMessage = null;
-
-        set_error_handler(
-            function ($level, $message) use (&$providedLevel, &$providedMessage) {
-                $providedMessage = $message;
-                $providedLevel = $level;
-            }
-        );
-
         $message = uniqid();
 
-        $logger->__invoke($priority, $message);
+        $this->logger->__invoke($priority, $message);
 
+        static::assertSame($expectedErrorLevel, $this->providedLevel);
+        static::assertSame($message, $this->providedMessage);
+    }
 
+    public function testDoesNotTriggerOnInvalidLevels()
+    {
+        $this->logger->__invoke(PHP_INT_MAX, 'x');
+        static::assertNull($this->providedLevel);
+    }
+
+    protected function tearDown()
+    {
         restore_error_handler();
 
-        static::assertSame($expectedErrorLevel, $providedLevel);
-        static::assertSame($message, $providedMessage);
+        parent::tearDown();
     }
 
     public function prioToErrorLevel()
