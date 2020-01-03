@@ -27,6 +27,7 @@ use ArrayObject;
 use Pretzlaw\WPInt\Filter\FilterAssertions;
 use RecursiveTreeIterator;
 use RmpUp\Wp\Bus\MessageBus;
+use RmpUp\Wp\Bus\MessageBusTrait;
 use RmpUp\Wp\Bus\StopPropagation;
 use RmpUp\Wp\Test\Bus\AbstractMessageBusTestCase;
 
@@ -68,5 +69,19 @@ class MessageBusTest extends AbstractMessageBusTestCase
         $this->mockFilter(\ArrayObject::class)->expects($this->never())->willReturn(42);
 
         $this->messageBus->handle(new ArrayObject([]));
+    }
+
+    public function testDoesNotDelegateWhenWordPressIsNotLoaded()
+    {
+        $o = new class {
+            use MessageBusTrait;
+
+            function doInvalid()
+            {
+                return $this->delegateToWp(uniqid(''), new ArrayObject());
+            }
+        };
+
+        static::assertNull($o->doInvalid());
     }
 }
