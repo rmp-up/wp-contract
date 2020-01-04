@@ -39,7 +39,7 @@ class WpCli extends AbstractLogger
         LOG_ERR => 'error',
         LOG_WARNING => 'warning',
         LOG_NOTICE => 'log',
-        LOG_INFO => 'debug',
+        LOG_INFO => 'log',
         LOG_DEBUG => 'debug',
     ];
 

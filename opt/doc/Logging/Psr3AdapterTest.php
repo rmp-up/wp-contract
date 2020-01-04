@@ -21,18 +21,19 @@
 
 declare(strict_types=1);
 
-namespace RmpUp\Wp\Test;
+namespace RmpUp\Wp\Test\Logging;
 
 use Psr\Log\LogLevel;
 use RmpUp\Wp\Logging\Psr3Adapter;
 use RmpUp\Wp\Logging\TriggerError;
+use RmpUp\Wp\Test\LoggingTestCase;
 
 /**
  * Psr3Adapter
  *
  * @copyright  2019 Pretzlaw (https://rmp-up.de)
  */
-class Psr3AdapterTest extends TestCase
+class Psr3AdapterTest extends LoggingTestCase
 {
     /**
      * @dataProvider prioToLevel

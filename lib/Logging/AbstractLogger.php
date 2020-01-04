@@ -63,4 +63,27 @@ abstract class AbstractLogger
 
         return $this->priorityMapping[$priority];
     }
+
+    /**
+     * Extract most meaningful information
+     *
+     * @param mixed[] $context
+     *
+     * @return mixed[] Scalar values only
+     */
+    protected function filterContext(array $context): array
+    {
+        // Only those which have a proper naming
+        $assoc = array_filter($context, 'is_string', ARRAY_FILTER_USE_KEY);
+
+        if (!$assoc) {
+            return [];
+        }
+
+        // Only primitive information (scalar) is allowed
+        return array_merge(
+            array_filter($assoc, 'is_scalar'),
+            array_map('get_class', array_filter($assoc, 'is_object'))
+        );
+    }
 }

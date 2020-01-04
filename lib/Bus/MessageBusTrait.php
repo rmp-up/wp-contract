@@ -64,6 +64,24 @@ trait MessageBusTrait
         }
     }
 
+    /**
+     * Delegate exception handling via command bus
+     *
+     * Wraps the exception in a status-container.
+     * All parents classes and interfaces will run through the bus.
+     *
+     * Example: An \DomainException does ...
+     *
+     * - `MessageBus::handle( \DomainException::class, new HandleException( $e ) )`
+     * - Its direct parent `MessageBus::handle( \RuntimeException::class, ...`
+     * - Its direct parent `...::handle( \RuntimeException::class, ... )`
+     * - Higher parents like `... \Exception::class ...`
+     * - The interface `... \Throwable::class ...`
+     *
+     * @param \Throwable $e
+     *
+     * @throws \Throwable
+     */
     protected function handleException(\Throwable $e)
     {
         // Ask others to handle this exception ...

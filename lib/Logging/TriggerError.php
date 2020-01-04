@@ -25,6 +25,8 @@ namespace RmpUp\Wp\Logging;
 /**
  * Forwarding log messages to trigger_error
  *
+ * @deprecated 2.0.0 Use ErrorLog instead because trigger_error is too intrusive (and can halt the system).
+ *
  * @package RmpUp\Wp\Logging
  */
 class TriggerError extends AbstractLogger
