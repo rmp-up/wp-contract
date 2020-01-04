@@ -30,8 +30,6 @@ namespace RmpUp\Wp\Logging;
  */
 class ErrorLog extends Psr3Adapter
 {
-    const CONTEXT_DEPTH = 4;
-
     /**
      * @var string
      */
@@ -110,18 +108,13 @@ class ErrorLog extends Psr3Adapter
             return '';
         }
 
-        $assoc = array_filter($context, 'is_string', ARRAY_FILTER_USE_KEY);
+        $context = $this->filterContext($context);
 
-        if (!$assoc) {
+        if (!$context) {
             return '';
         }
 
-        return ' ' . json_encode(
-                array_merge(
-                    array_filter($assoc, 'is_scalar'),
-                    array_map('get_class', array_filter($assoc, 'is_object'))
-                )
-            );
+        return ' ' . json_encode($context);
     }
 
     /**
